@@ -38,11 +38,8 @@ alternativeLoopThroughArray(arrayOfNumbers);
 const alternativeRandomNumber = Math.random();
 
 function alternativeCheckNumber(number1, number2) {
-  if (number1 > 0.7 && number2 > 0.7) {
+  if ((number1 > 0.7 && number2 > 0.7) || number1 <= 0.2 || number2 <= 0.2) {
     alert("Number alert 2");
-  }
-  if (number1 <= 0.2 || number2 <= 0.2) {
-    alert("Number 2 alert");
   }
 }
 alternativeCheckNumber(randomNumber, alternativeRandomNumber);
