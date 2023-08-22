@@ -21,5 +21,21 @@ const sayHello3 = (phrase, name) => {
   return message;
 };
 
+function CheckInput(callback, ...strings) {
+  let textIsEmpty = false;
+  for (const string of strings) {
+    if (!string) {
+      textIsEmpty = true;
+      break;
+    }
+  }
+  if (!textIsEmpty) {
+    callback();
+  }
+}
+
 sayHello();
 sayHello0();
+CheckInput(() => {
+  console.log("Not empty"), "String1", "String2";
+});
