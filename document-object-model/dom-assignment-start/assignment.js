@@ -8,3 +8,6 @@ const elementTitleSelection = document.querySelector("title");
 // elementTitleSelection.textContent = "Assignment - Solved!";
 const elementTitleSelection2 = document.head.querySelector("title");
 elementTitleSelection2.textContent = "Assignment - Solved!";
+
+const elementH1Selection = document.querySelector("h1");
+elementH1Selection.textContent = "Assignment - Solved!";
