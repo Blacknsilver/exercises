@@ -12,10 +12,24 @@ const toggleBackdrop = () => {
   backdrop.classList.toggle("visible");
 };
 
+const cancelAddMovieButton = addMovieModal.querySelector(".btn--passive");
+
 const toggleMovieModal = () => {
   addMovieModal.classList.toggle("visible");
   toggleBackdrop();
 };
 //open Modal if it's closed and vice-versa
 
+const cancelAddMovie = () => {
+  toggleMovieModal();
+};
+// If the user has clicked on add movie and clicks cancel, this turns the backdrop off.
+
+const backdropClickHandler = () => {
+  toggleMovieModal();
+};
+// Whenever the user clicks on the backdrop, turn its visibility off.
+
 startAddMovieButton.addEventListener("click", toggleMovieModal);
+backdrop.addEventListener("click", backdropClickHandler);
+cancelAddMovieButton.addEventListener("click", cancelAddMovie);
