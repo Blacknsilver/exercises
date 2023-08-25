@@ -1,18 +1,18 @@
 const addMovieModal = document.getElementById("add-modal");
 // const addMovieModal = document.body.children[1];
 // const addMovieModal = document.querySelector('add-modal');
-
 const startAddMovieButton = document.querySelector("header button");
 // querySelector.lastElementChild; would also work
-
 const backdrop = document.getElementById("backdrop");
 // const backdrop = document.body.firstElementChild;
+const cancelAddMovieButton = addMovieModal.querySelector(".btn--passive");
+const confirmAddMovieButton = cancelAddMovieButton.nextElementSibling;
+const userInputs = addMovieModal.querySelectorAll("input");
+// Puts all the user inputs in an array-like object.
 
 const toggleBackdrop = () => {
   backdrop.classList.toggle("visible");
 };
-
-const cancelAddMovieButton = addMovieModal.querySelector(".btn--passive");
 
 const toggleMovieModal = () => {
   addMovieModal.classList.toggle("visible");
@@ -20,10 +20,28 @@ const toggleMovieModal = () => {
 };
 //open Modal if it's closed and vice-versa
 
-const cancelAddMovie = () => {
+const cancelAddMovieHandler = () => {
   toggleMovieModal();
 };
 // If the user has clicked on add movie and clicks cancel, this turns the backdrop off.
+
+const addMovieHandler = () => {
+  const titleValue = userInputs[0].value; // this will be an input element so we will have a value property
+  const imageUrlValue = userInputs[1].value;
+  const ratingValue = userInputs[2].value;
+
+  if (
+    titleValue.trim() === "" || // .trim removes excess white space at the beginning and end of the input
+    imageUrlValue === "" ||
+    ratingValue === "" ||
+    +ratingValue < 1 ||
+    +ratingValue > 5
+  ) {
+    alert("Please enter valid values (rating between 1 and 5).");
+    return;
+  }
+};
+// Validates whether the user inputs are valid.
 
 const backdropClickHandler = () => {
   toggleMovieModal();
@@ -32,4 +50,5 @@ const backdropClickHandler = () => {
 
 startAddMovieButton.addEventListener("click", toggleMovieModal);
 backdrop.addEventListener("click", backdropClickHandler);
-cancelAddMovieButton.addEventListener("click", cancelAddMovie);
+cancelAddMovieButton.addEventListener("click", cancelAddMovieHandler);
+confirmAddMovieButton.addEventListener("click", addMovieHandler);
