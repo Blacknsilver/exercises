@@ -10,8 +10,17 @@ const confirmAddMovieButton = cancelAddMovieButton.nextElementSibling;
 const userInputs = addMovieModal.querySelectorAll("input");
 // Puts all the user inputs in an array-like object.
 
+const movies = [];
+
 const toggleBackdrop = () => {
   backdrop.classList.toggle("visible");
+};
+
+const clearMovieInputs = () => {
+  // userInputs[0].value = "";  // This also works
+  for (const userInput of userInputs) {
+    userInput.value = ""; // Clears the current user input from the "add new movie" screen.
+  }
 };
 
 const toggleMovieModal = () => {
@@ -22,6 +31,7 @@ const toggleMovieModal = () => {
 
 const cancelAddMovieHandler = () => {
   toggleMovieModal();
+  clearMovieInputs();
 };
 // If the user has clicked on add movie and clicks cancel, this turns the backdrop off.
 
@@ -39,9 +49,16 @@ const addMovieHandler = () => {
   ) {
     alert("Please enter valid values (rating between 1 and 5).");
     return;
-  }
+  } // Validates whether the user inputs are valid.
+  const newMovie = {
+    title: titleValue,
+    image: imageUrlValue,
+    rating: ratingValue,
+  };
+  movies.push(newMovie); // Adds a new movie to the movies array.
+  toggleMovieModal();
+  clearMovieInputs();
 };
-// Validates whether the user inputs are valid.
 
 const backdropClickHandler = () => {
   toggleMovieModal();
