@@ -41,6 +41,7 @@ const deleteMovieHandler = (movieId) => {
   const listRoot = document.getElementById("movie-list");
   listRoot.children[movieIndex].remove();
   closeMovieDeletionModal();
+  updateUI(); // If there are no movies, re-add the initial "Your personal movie database" text
 };
 
 const startDeleteMovieHandler = (movieId) => {
