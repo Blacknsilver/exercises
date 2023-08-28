@@ -20,6 +20,22 @@ const updateUI = () => {
   }
 }; // If there are movies, hide the "your movie database" message up top
 
+const renderNewMovieElement = (title, imageUrl, rating) => {
+  const newMovieElement = document.createElement("li");
+  newMovieElement.className = "movie-element";
+  newMovieElement.innerHTML = `
+    <div class="movie-element__image">
+    <img src="${imageUrl}" alt="${title}">
+    </div>
+    <div class ="movie-element__info">
+    <h2>${title}</h2>
+    <p>${rating}/5 stars</p>
+    </div>
+   `;
+  const listRoot = document.getElementById("movie-list");
+  listRoot.append(newMovieElement);
+};
+
 const toggleBackdrop = () => {
   backdrop.classList.toggle("visible");
 };
@@ -66,6 +82,7 @@ const addMovieHandler = () => {
   movies.push(newMovie); // Adds a new movie to the movies array.
   toggleMovieModal();
   clearMovieInputs();
+  renderNewMovieElement(newMovie.title, newMovie.image, newMovie.rating);
   updateUI();
 };
 
