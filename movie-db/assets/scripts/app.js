@@ -21,7 +21,7 @@ const updateUI = () => {
   }
 }; // If there are movies, hide the "your movie database" message up top
 
-const deleteMovie = (movieId) => {
+const deleteMovieHandler = (movieId) => {
   let movieIndex = 0;
   for (const movie of movies) {
     if (movie.id === movieId) {
@@ -39,7 +39,7 @@ const closeMovieDeletionModal = () => {
   deleteMovieModal.classList.remove("visible");
 };
 
-const deleteMovieHandler = (movieId) => {
+const startDeleteMovieHandler = (movieId) => {
   deleteMovieModal.classList.add("visible"); // Removing this is not necessary because this modal cannot be visible when this function executes
   toggleBackdrop();
   const cancelDeletionButton =
@@ -47,7 +47,10 @@ const deleteMovieHandler = (movieId) => {
   const confirmDeletionButton =
     deleteMovieModal.querySelector(".button--danger");
   cancelDeletionButton.addEventListener("click", closeMovieDeletionModal);
-  deleteMovie(movieId);
+  confirmDeletionButton.addEventListener(
+    "click",
+    deleteMovieHandler.bind(null, movieId)
+  );
 };
 
 const renderNewMovieElement = (id, title, imageUrl, rating) => {
@@ -62,7 +65,10 @@ const renderNewMovieElement = (id, title, imageUrl, rating) => {
     <p>${rating}/5 stars</p>
     </div>
    `;
-  newMovieElement.addEventListener("click", deleteMovieHandler.bind(null, id));
+  newMovieElement.addEventListener(
+    "click",
+    startDeleteMovieHandler.bind(null, id)
+  );
   const listRoot = document.getElementById("movie-list");
   listRoot.append(newMovieElement);
 };
