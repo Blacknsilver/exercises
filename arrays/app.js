@@ -24,4 +24,10 @@ hobbies.shift(); // Removes item from the beginning of an array. Shifts all elem
 
 hobbies[1] = "Dancing"; // Set existing element to something else
 
+hobbies.splice(1, 0, "Eating"); // Not useable on array-like objects
+
+console.log(hobbies);
+
+hobbies.splice(0, 1, "Drinking");
+
 console.log(hobbies);
