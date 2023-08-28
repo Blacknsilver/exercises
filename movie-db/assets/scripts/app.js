@@ -9,8 +9,16 @@ const cancelAddMovieButton = addMovieModal.querySelector(".btn--passive");
 const confirmAddMovieButton = cancelAddMovieButton.nextElementSibling;
 const userInputs = addMovieModal.querySelectorAll("input");
 // Puts all the user inputs in an array-like object.
-
+const entryTextSection = document.getElementById("entry-text");
 const movies = [];
+
+const updateUI = () => {
+  if (movies.length === 0) {
+    entryTextSection.style.display = "block";
+  } else {
+    entryTextSection.style.display = "none";
+  }
+}; // If there are movies, hide the "your movie database" message up top
 
 const toggleBackdrop = () => {
   backdrop.classList.toggle("visible");
@@ -58,6 +66,7 @@ const addMovieHandler = () => {
   movies.push(newMovie); // Adds a new movie to the movies array.
   toggleMovieModal();
   clearMovieInputs();
+  updateUI();
 };
 
 const backdropClickHandler = () => {
