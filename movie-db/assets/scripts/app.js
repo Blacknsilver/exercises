@@ -42,6 +42,11 @@ const closeMovieDeletionModal = () => {
 const deleteMovieHandler = (movieId) => {
   deleteMovieModal.classList.add("visible"); // Removing this is not necessary because this modal cannot be visible when this function executes
   toggleBackdrop();
+  const cancelDeletionButton =
+    deleteMovieModal.querySelector(".button--passive");
+  const confirmDeletionButton =
+    deleteMovieModal.querySelector(".button--danger");
+  cancelDeletionButton.addEventListener("click", closeMovieDeletionModal);
   deleteMovie(movieId);
 };
 
