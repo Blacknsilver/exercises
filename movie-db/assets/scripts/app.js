@@ -10,6 +10,7 @@ const confirmAddMovieButton = cancelAddMovieButton.nextElementSibling;
 const userInputs = addMovieModal.querySelectorAll("input");
 // Puts all the user inputs in an array-like object.
 const entryTextSection = document.getElementById("entry-text");
+const deleteMovieModal = document.getElementById("delete-modal");
 const movies = [];
 
 const updateUI = () => {
@@ -20,7 +21,7 @@ const updateUI = () => {
   }
 }; // If there are movies, hide the "your movie database" message up top
 
-const deleteMovieHandler = (movieId) => {
+const deleteMovie = (movieId) => {
   let movieIndex = 0;
   for (const movie of movies) {
     if (movie.id === movieId) {
@@ -31,6 +32,17 @@ const deleteMovieHandler = (movieId) => {
   movies.splice(movieIndex, 1); // Items will move forward by 1 space after the target is deleted
   const listRoot = document.getElementById("movie-list");
   listRoot.children[movieIndex].remove();
+};
+
+const closeMovieDeletionModal = () => {
+  toggleBackdrop();
+  deleteMovieModal.classList.remove("visible");
+};
+
+const deleteMovieHandler = (movieId) => {
+  deleteMovieModal.classList.add("visible"); // Removing this is not necessary because this modal cannot be visible when this function executes
+  toggleBackdrop();
+  deleteMovie(movieId);
 };
 
 const renderNewMovieElement = (id, title, imageUrl, rating) => {
@@ -61,14 +73,18 @@ const clearMovieInputs = () => {
   }
 };
 
-const toggleMovieModal = () => {
-  addMovieModal.classList.toggle("visible");
+const closeMovieModal = () => {
+  addMovieModal.classList.remove("visible");
+};
+
+const showMovieModal = () => {
+  addMovieModal.classList.add("visible");
   toggleBackdrop();
 };
 //open Modal if it's closed and vice-versa
 
 const cancelAddMovieHandler = () => {
-  toggleMovieModal();
+  closeMovieModal();
   clearMovieInputs();
 };
 // If the user has clicked on add movie and clicks cancel, this turns the backdrop off.
@@ -95,7 +111,8 @@ const addMovieHandler = () => {
     rating: ratingValue,
   };
   movies.push(newMovie); // Adds a new movie to the movies array.
-  toggleMovieModal();
+  closeMovieModal();
+  toggleBackdrop();
   clearMovieInputs();
   renderNewMovieElement(
     newMovie.id,
@@ -107,11 +124,12 @@ const addMovieHandler = () => {
 };
 
 const backdropClickHandler = () => {
-  toggleMovieModal();
+  closeMovieModal();
+  closeMovieDeletionModal();
 };
 // Whenever the user clicks on the backdrop, turn its visibility off.
 
-startAddMovieButton.addEventListener("click", toggleMovieModal);
+startAddMovieButton.addEventListener("click", showMovieModal);
 backdrop.addEventListener("click", backdropClickHandler);
 cancelAddMovieButton.addEventListener("click", cancelAddMovieHandler);
 confirmAddMovieButton.addEventListener("click", addMovieHandler);
