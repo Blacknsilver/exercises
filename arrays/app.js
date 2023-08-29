@@ -32,16 +32,22 @@
 
 // console.log(hobbies);
 
+// const testResults = [1, 5.3, 1.5, 10.99, -5, 10];
+
+// console.log(testResults.slice());
+// const storedResults = testResults.slice(); // Returns a brand new array
+// testResults.push(5.91);
+
+// console.log(storedResults, testResults);
+
+// storedResults2 = testResults.slice(0, 2); // Finds and adds the elements from the first index (included) to the second (not included). Can also use negative numbers but
+// // both arguments have to be negative.
+// console.log(storedResults2);
+
+// console.log(testResults.slice(2)); //Using a single argument will output everything from that element (included) to the end.
+
 const testResults = [1, 5.3, 1.5, 10.99, -5, 10];
+const storedResults = testResults.concat([3.99, 2]); // Creates a new array by combining an existing array with the elements inside of concat.
 
-console.log(testResults.slice());
-const storedResults = testResults.slice(); // Returns a brand new array
-testResults.push(5.91);
-
-console.log(storedResults, testResults);
-
-storedResults2 = testResults.slice(0, 2); // Finds and adds the elements from the first index (included) to the second (not included). Can also use negative numbers but
-// both arguments have to be negative.
-console.log(storedResults2);
-
-console.log(testResults.slice(2)); //Using a single argument will output everything from that element (included) to the end.
+console.log(storedResults);
+console.log(testResults);
