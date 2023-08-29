@@ -46,8 +46,16 @@
 
 // console.log(testResults.slice(2)); //Using a single argument will output everything from that element (included) to the end.
 
-const testResults = [1, 5.3, 1.5, 10.99, -5, 10];
-const storedResults = testResults.concat([3.99, 2]); // Creates a new array by combining an existing array with the elements inside of concat.
+// const testResults = [1, 5.3, 1.5, 10.99, -5, 10];
+// const storedResults = testResults.concat([3.99, 2]); // Creates a new array by combining an existing array with the elements inside of concat.
 
-console.log(storedResults);
-console.log(testResults);
+// console.log(storedResults);
+// console.log(testResults); // Original not changed
+
+const testResults = [1, 5.3, 1.5, 10.99, -5, 10, 1.5];
+console.log(testResults.indexOf(1.5)); // Returns the index of the value inside the parentheses. Will only look for the first element, then stop.
+
+console.log(testResults.lastIndexOf(1.5));
+
+const personData = [{ name: "Max" }, { name: "Manuel" }];
+console.log(personData.indexOf({ name: "Manuel" })); // Returns -1, which means it couldn't find anything. indexOf doesn't work if there are objects in the array.
