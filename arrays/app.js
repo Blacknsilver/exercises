@@ -99,4 +99,17 @@ const taxAdjustedPrices = prices.map((price, idx, prices) => {
   return priceObj;
 }); // Same as forEach but returns a new element for each array. The original remains untouched.
 
-console.log(prices, taxAdjustedPrices);
+// console.log(prices, taxAdjustedPrices);
+
+// const sortedPrices = prices.sort(); // Converts everything to a string and checks the first number in each element, where 1 is smaller than 3.
+const sortedPrices = prices.sort((a, b) => {
+  if (a > b) {
+    return 1;
+  } else if (a === b) {
+    return 0;
+  } else {
+    return -1;
+  }
+});
+console.log(sortedPrices);
+console.log(sortedPrices.reverse()); // Reverses the array.
