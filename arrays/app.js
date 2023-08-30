@@ -92,45 +92,67 @@
 
 // console.log(taxAdjustedPrices);
 
-const prices = [10.99, 5.99, 3.99, 6.59];
-const tax = 0.2;
-const taxAdjustedPrices = prices.map((price, idx, prices) => {
-  const priceObj = { index: idx, taxAdjPrice: price * (1 + tax) };
-  return priceObj;
-}); // Same as forEach but returns a new element for each array. The original remains untouched.
+// const prices = [10.99, 5.99, 3.99, 6.59];
+// const tax = 0.2;
+// const taxAdjustedPrices = prices.map((price, idx, prices) => {
+//   const priceObj = { index: idx, taxAdjPrice: price * (1 + tax) };
+//   return priceObj;
+// }); // Same as forEach but returns a new element for each array. The original remains untouched.
 
-// console.log(prices, taxAdjustedPrices);
+// // console.log(prices, taxAdjustedPrices);
 
-// const sortedPrices = prices.sort(); // Converts everything to a string and checks the first number in each element, where 1 is smaller than 3.
-const sortedPrices = prices.sort((a, b) => {
-  if (a > b) {
-    return 1;
-  } else if (a === b) {
-    return 0;
-  } else {
-    return -1;
-  }
-});
-console.log(sortedPrices);
-console.log(sortedPrices.reverse()); // Reverses the array.
-
-const filteredArray = prices.filter((price, index, prices) => {
-  return price > 6;
-}); // Returns new array. Expects to return true or false. False drops the value of the current index.
-
-// Alternative way to write the same code:
-// const filteredArray = prices.filter(price => price >6)
-console.log(filteredArray);
-
-// let sum = 0;
-
-// prices.forEach((price) => {
-//   sum += price;
+// // const sortedPrices = prices.sort(); // Converts everything to a string and checks the first number in each element, where 1 is smaller than 3.
+// const sortedPrices = prices.sort((a, b) => {
+//   if (a > b) {
+//     return 1;
+//   } else if (a === b) {
+//     return 0;
+//   } else {
+//     return -1;
+//   }
 // });
+// console.log(sortedPrices);
+// console.log(sortedPrices.reverse()); // Reverses the array.
+
+// const filteredArray = prices.filter((price, index, prices) => {
+//   return price > 6;
+// }); // Returns new array. Expects to return true or false. False drops the value of the current index.
+
+// // Alternative way to write the same code:
+// // const filteredArray = prices.filter(price => price >6)
+// console.log(filteredArray);
+
+// // let sum = 0;
+
+// // prices.forEach((price) => {
+// //   sum += price;
+// // });
+
+// // console.log(sum);
+// const sum = prices.reduce((prevValue, currValue, currIndex, prices) => {
+//   return prevValue + currValue;
+// }, 0); // Adds together every element in the array, 0 is the starting number. We want total value so it's 0.
 
 // console.log(sum);
-const sum = prices.reduce((prevValue, currValue, currIndex, prices) => {
-  return prevValue + currValue;
-}, 0); // Adds together every element in the array, 0 is the starting number. We want total value so it's 0.
 
-console.log(sum);
+const nameFragments = ["Max", "Schwartz"];
+nameFragments.push("Mr");
+
+const copiedNameFragments = [...nameFragments]; //This is the spread operator. It returns a new object where each element is an element from the array.
+console.log(copiedNameFragments, nameFragments);
+console.log(Math.min(1, 5, -3)); // Works fine.
+const prices = [10.99, 5.99, 3.99, 6.59];
+console.log(Math.min(prices)); // Does not work with array.s
+console.log(Math.min(...prices)); // Works just fine!
+
+const persons = [
+  { name: "Max", age: 30 },
+  { name: "Manuel", age: 31 },
+];
+const copiedPersons = [...persons];
+persons.push({ name: "Anna", age: 29 });
+persons[0].age = 13;
+console.log(persons, copiedPersons); // The age is a reference type so we're only working with the address in memory.
+const secondCopiedPersons = [
+  ...persons.map((person) => ({ name: person.name, age: person.age })),
+]; // This is how to create new objects in new places in memory.
