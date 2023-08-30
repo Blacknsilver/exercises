@@ -60,19 +60,35 @@
 // const personData = [{ name: "Max" }, { name: "Manuel" }];
 // console.log(personData.indexOf({ name: "Manuel" })); // Returns -1, which means it couldn't find anything. indexOf doesn't work if there are objects in the array.
 
-const personData = [{ name: "Max" }, { name: "Manuel" }];
-const manuel = personData.find((person, idx, persons) => {
-  // Executes this anonymous function on every element in the object  and then passes in that element,
-  // then the index, then the full array. This does not create a copy, it uses the original object.
-  return person.name === "Manuel"; // If there are multiple Manuels, it will still stop after the first one.
-});
-console.log(manuel);
-manuel.name = "Daniel";
-console.log(personData);
+// const personData = [{ name: "Max" }, { name: "Manuel" }];
+// const manuel = personData.find((person, idx, persons) => {
+//   // Executes this anonymous function on every element in the object  and then passes in that element,
+//   // then the index, then the full array. This does not create a copy, it uses the original object.
+//   return person.name === "Manuel"; // If there are multiple Manuels, it will still stop after the first one.
+// });
+// console.log(manuel);
+// manuel.name = "Daniel";
+// console.log(personData);
 
-const maxIndex = personData.findIndex((person, idx, persons) => {
-  // This will not return the matching item but the index of that item.
-  return person.name === "Max";
-});
+// const maxIndex = personData.findIndex((person, idx, persons) => {
+//   // This will not return the matching item but the index of that item.
+//   return person.name === "Max";
+// });
 
-console.log(maxIndex);
+// console.log(maxIndex);
+
+const prices = [10.99, 5.99, 3.99, 6.59];
+
+const tax = 0.2;
+const taxAdjustedPrices = [];
+
+// for (const price of prices) {
+//   taxAdjustedPrices.push(price * (1 + tax));
+// } // This works fine
+prices.forEach((price, idx, prices) => {
+  // prices can be used here fine because of block scoping
+  const priceObj = { index: idx, taxAdjPrice: price * (1 + tax) };
+  taxAdjustedPrices.push(priceObj);
+}); // An alternative to for loops that gives easy access to indices.
+
+console.log(taxAdjustedPrices);
