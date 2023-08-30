@@ -117,4 +117,20 @@ console.log(sortedPrices.reverse()); // Reverses the array.
 const filteredArray = prices.filter((price, index, prices) => {
   return price > 6;
 }); // Returns new array. Expects to return true or false. False drops the value of the current index.
+
+// Alternative way to write the same code:
+// const filteredArray = prices.filter(price => price >6)
 console.log(filteredArray);
+
+// let sum = 0;
+
+// prices.forEach((price) => {
+//   sum += price;
+// });
+
+// console.log(sum);
+const sum = prices.reduce((prevValue, currValue, currIndex, prices) => {
+  return prevValue + currValue;
+}, 0); // Adds together every element in the array, 0 is the starting number. We want total value so it's 0.
+
+console.log(sum);
