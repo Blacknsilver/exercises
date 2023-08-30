@@ -77,18 +77,26 @@
 
 // console.log(maxIndex);
 
+// const prices = [10.99, 5.99, 3.99, 6.59];
+// const tax = 0.2;
+// const taxAdjustedPrices = [];
+
+// // for (const price of prices) {
+// //   taxAdjustedPrices.push(price * (1 + tax));
+// // } // This works fine
+// prices.forEach((price, idx, prices) => {
+//   // prices can be used here fine because of block scoping
+//   const priceObj = { index: idx, taxAdjPrice: price * (1 + tax) };
+//   taxAdjustedPrices.push(priceObj);
+// }); // An alternative to for loops that gives easy access to indices.
+
+// console.log(taxAdjustedPrices);
+
 const prices = [10.99, 5.99, 3.99, 6.59];
-
 const tax = 0.2;
-const taxAdjustedPrices = [];
-
-// for (const price of prices) {
-//   taxAdjustedPrices.push(price * (1 + tax));
-// } // This works fine
-prices.forEach((price, idx, prices) => {
-  // prices can be used here fine because of block scoping
+const taxAdjustedPrices = prices.map((price, idx, prices) => {
   const priceObj = { index: idx, taxAdjPrice: price * (1 + tax) };
-  taxAdjustedPrices.push(priceObj);
-}); // An alternative to for loops that gives easy access to indices.
+  return priceObj;
+}); // Same as forEach but returns a new element for each array. The original remains untouched.
 
-console.log(taxAdjustedPrices);
+console.log(prices, taxAdjustedPrices);
