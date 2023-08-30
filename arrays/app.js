@@ -52,10 +52,27 @@
 // console.log(storedResults);
 // console.log(testResults); // Original not changed
 
-const testResults = [1, 5.3, 1.5, 10.99, -5, 10, 1.5];
-console.log(testResults.indexOf(1.5)); // Returns the index of the value inside the parentheses. Will only look for the first element, then stop.
+// const testResults = [1, 5.3, 1.5, 10.99, -5, 10, 1.5];
+// console.log(testResults.indexOf(1.5)); // Returns the index of the value inside the parentheses. Will only look for the first element, then stop.
 
-console.log(testResults.lastIndexOf(1.5));
+// console.log(testResults.lastIndexOf(1.5));
+
+// const personData = [{ name: "Max" }, { name: "Manuel" }];
+// console.log(personData.indexOf({ name: "Manuel" })); // Returns -1, which means it couldn't find anything. indexOf doesn't work if there are objects in the array.
 
 const personData = [{ name: "Max" }, { name: "Manuel" }];
-console.log(personData.indexOf({ name: "Manuel" })); // Returns -1, which means it couldn't find anything. indexOf doesn't work if there are objects in the array.
+const manuel = personData.find((person, idx, persons) => {
+  // Executes this anonymous function on every element in the object  and then passes in that element,
+  // then the index, then the full array. This does not create a copy, it uses the original object.
+  return person.name === "Manuel"; // If there are multiple Manuels, it will still stop after the first one.
+});
+console.log(manuel);
+manuel.name = "Daniel";
+console.log(personData);
+
+const maxIndex = personData.findIndex((person, idx, persons) => {
+  // This will not return the matching item but the index of that item.
+  return person.name === "Max";
+});
+
+console.log(maxIndex);
