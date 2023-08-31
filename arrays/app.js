@@ -165,9 +165,27 @@
 // // storing the elements from the array. The spread operator adds any other data into a new array.
 // console.log(firstName, secondName, otherInformation);
 
-const ids = new Set([1, 2, 3]);
-ids.add(2); // This is not added because values in sets are unique.
-console.log(ids.has(1));
-for (const entry of ids.entries()) {
-  console.log(entry);
-} // This returns the value twice. values() can return the values once, ironically.
+// const ids = new Set([1, 2, 3]);
+// ids.add(2); // This is not added because values in sets are unique.
+// console.log(ids.has(1));
+// for (const entry of ids.entries()) {
+//   console.log(entry);
+// } // This returns the value twice. values() can return the values once, ironically.
+
+const person1 = { name: "Max" };
+const person2 = { name: "Manuel" };
+
+const personData = new Map([[person1, [{ date: "yesterday", price: 10 }]]]); // Each array is one key:value pair.
+console.log(personData);
+console.log(personData.get(person1)); // The exact same object
+
+personData.set(person2, [{ date: "two weeks ago", price: 100 }]);
+for (const [key, value] of personData.entries()) {
+  console.log(key, value);
+}
+
+for (const key of personData.keys()) {
+  console.log(key);
+} // Logs all the keys.
+
+console.log(personData.size); // How many elements are inside the map.
