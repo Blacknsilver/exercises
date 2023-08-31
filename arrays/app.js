@@ -135,24 +135,32 @@
 
 // console.log(sum);
 
-const nameFragments = ["Max", "Schwartz"];
-nameFragments.push("Mr");
+// const nameFragments = ["Max", "Schwartz"];
+// nameFragments.push("Mr");
 
-const copiedNameFragments = [...nameFragments]; //This is the spread operator. It returns a new object where each element is an element from the array.
-console.log(copiedNameFragments, nameFragments);
-console.log(Math.min(1, 5, -3)); // Works fine.
-const prices = [10.99, 5.99, 3.99, 6.59];
-console.log(Math.min(prices)); // Does not work with array.s
-console.log(Math.min(...prices)); // Works just fine!
+// const copiedNameFragments = [...nameFragments]; //This is the spread operator. It returns a new object where each element is an element from the array.
+// console.log(copiedNameFragments, nameFragments);
+// console.log(Math.min(1, 5, -3)); // Works fine.
+// const prices = [10.99, 5.99, 3.99, 6.59];
+// console.log(Math.min(prices)); // Does not work with array.s
+// console.log(Math.min(...prices)); // Works just fine!
 
-const persons = [
-  { name: "Max", age: 30 },
-  { name: "Manuel", age: 31 },
-];
-const copiedPersons = [...persons];
-persons.push({ name: "Anna", age: 29 });
-persons[0].age = 13;
-console.log(persons, copiedPersons); // The age is a reference type so we're only working with the address in memory.
-const secondCopiedPersons = [
-  ...persons.map((person) => ({ name: person.name, age: person.age })),
-]; // This is how to create new objects in new places in memory.
+// const persons = [
+//   { name: "Max", age: 30 },
+//   { name: "Manuel", age: 31 },
+// ];
+// const copiedPersons = [...persons];
+// persons.push({ name: "Anna", age: 29 });
+// persons[0].age = 13;
+// console.log(persons, copiedPersons); // The age is a reference type so we're only working with the address in memory.
+// const secondCopiedPersons = [
+//   ...persons.map((person) => ({ name: person.name, age: person.age })),
+// ]; // This is how to create new objects in new places in memory.
+
+const nameData = ["Max", "Schwartz", "Mr", 30];
+// const firstName = nameData[0];
+// const secondName = nameData[1];
+
+const [firstName, secondName, ...otherInformation] = nameData; // The words inside the square brackets are used for naming the vars
+// storing the elements from the array. The spread operator adds any other data into a new array.
+console.log(firstName, secondName, otherInformation);
