@@ -157,10 +157,17 @@
 //   ...persons.map((person) => ({ name: person.name, age: person.age })),
 // ]; // This is how to create new objects in new places in memory.
 
-const nameData = ["Max", "Schwartz", "Mr", 30];
-// const firstName = nameData[0];
-// const secondName = nameData[1];
+// const nameData = ["Max", "Schwartz", "Mr", 30];
+// // const firstName = nameData[0];
+// // const secondName = nameData[1];
 
-const [firstName, secondName, ...otherInformation] = nameData; // The words inside the square brackets are used for naming the vars
-// storing the elements from the array. The spread operator adds any other data into a new array.
-console.log(firstName, secondName, otherInformation);
+// const [firstName, secondName, ...otherInformation] = nameData; // The words inside the square brackets are used for naming the vars
+// // storing the elements from the array. The spread operator adds any other data into a new array.
+// console.log(firstName, secondName, otherInformation);
+
+const ids = new Set([1, 2, 3]);
+ids.add(2); // This is not added because values in sets are unique.
+console.log(ids.has(1));
+for (const entry of ids.entries()) {
+  console.log(entry);
+} // This returns the value twice. values() can return the values once, ironically.
