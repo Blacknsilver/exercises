@@ -172,20 +172,26 @@
 //   console.log(entry);
 // } // This returns the value twice. values() can return the values once, ironically.
 
-const person1 = { name: "Max" };
-const person2 = { name: "Manuel" };
+// const person1 = { name: "Max" };
+// const person2 = { name: "Manuel" };
 
-const personData = new Map([[person1, [{ date: "yesterday", price: 10 }]]]); // Each array is one key:value pair.
-console.log(personData);
-console.log(personData.get(person1)); // The exact same object
+// const personData = new Map([[person1, [{ date: "yesterday", price: 10 }]]]); // Each array is one key:value pair.
+// console.log(personData);
+// console.log(personData.get(person1)); // The exact same object
 
-personData.set(person2, [{ date: "two weeks ago", price: 100 }]);
-for (const [key, value] of personData.entries()) {
-  console.log(key, value);
-}
+// personData.set(person2, [{ date: "two weeks ago", price: 100 }]);
+// for (const [key, value] of personData.entries()) {
+//   console.log(key, value);
+// }
 
-for (const key of personData.keys()) {
-  console.log(key);
-} // Logs all the keys.
+// for (const key of personData.keys()) {
+//   console.log(key);
+// } // Logs all the keys.
 
-console.log(personData.size); // How many elements are inside the map.
+// console.log(personData.size); // How many elements are inside the map.
+
+let person = { name: "Max" };
+const persons = new WeakSet(); // Can only store objects
+persons.add(person);
+console.log(persons);
+person = null; // The address is released, which is useful for garbage collection.
