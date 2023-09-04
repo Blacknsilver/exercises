@@ -22,3 +22,20 @@ function findMax(...nums) {
 }
 
 console.log(findMax(...numbers));
+
+function findMinMax(...nums) {
+  let curMax = nums[0];
+  let curMin = nums[0];
+  for (const num of nums) {
+    if (num > curMax) {
+      curMax = num;
+    }
+    if (num < curMin) {
+      curMin = num;
+    }
+  }
+  return [curMin, curMax];
+}
+
+const [min, max] = findMinMax(...numbers);
+console.log(min, max);
