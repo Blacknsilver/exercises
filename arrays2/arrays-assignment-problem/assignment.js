@@ -10,3 +10,15 @@ const multiplication = numbers.reduce((currResult, currVal) => {
   return currResult * currVal;
 }, 1); // Have to start with 1, starting multiplication with 0 results in nothing but 0s.
 console.log(multiplication);
+
+function findMax(...nums) {
+  let curMax = nums[0];
+  for (const num of nums) {
+    if (num > curMax) {
+      curMax = num;
+    }
+  }
+  return curMax;
+}
+
+console.log(findMax(...numbers));
