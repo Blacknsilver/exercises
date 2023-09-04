@@ -39,3 +39,11 @@ function findMinMax(...nums) {
 
 const [min, max] = findMinMax(...numbers);
 console.log(min, max);
+
+const userIds = new Set();
+userIds.add(1);
+userIds.add(2);
+userIds.add(2);
+userIds.add(3);
+userIds.add(4);
+console.log(userIds);
