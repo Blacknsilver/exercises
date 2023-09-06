@@ -64,3 +64,5 @@ const addMovieHandler = () => {
   movies.push(newMovie);
   console.log(newMovie);
 };
+
+addMovieBtn.addEventListener("click", addMovieHandler);
