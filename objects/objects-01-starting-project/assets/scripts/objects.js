@@ -22,3 +22,8 @@ const person = {
 };
 
 console.log(person["first name"]); // This is how to access string keys.
+
+const movieList = document.getElementById("movie-list");
+
+movieList.style["backgroundColor"] = "red"; // This also works
+movieList.style.display = "block";
