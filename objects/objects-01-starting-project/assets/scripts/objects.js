@@ -19,7 +19,9 @@ const person = {
   greet: function () {
     alert("Hello There");
   },
+  1.5: "hello", // must be a positive number or zero
 };
+console.log(person[1.5]); // this doesn't need quotes
 
 console.log(person["first name"]); // This is how to access string keys.
 
@@ -27,3 +29,6 @@ const movieList = document.getElementById("movie-list");
 
 movieList.style["backgroundColor"] = "red"; // This also works
 movieList.style.display = "block";
+
+const numbers = { 5: "hi", 1: "true" };
+console.log(numbers); // If an object only has numbers as keys, it gets sorted immediately. If there are string keys, the order will be kept.
