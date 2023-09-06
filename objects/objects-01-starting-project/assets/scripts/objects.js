@@ -11,11 +11,13 @@
 // delete person.name; // This is how to remove a property from an object.
 // // person.age = undefined // This works but is not as clean. Null also works but delete is optimal.
 // console.log(person);
-
+const userChosenName = "user";
 const person = {
   "first name": "Max", // this is how strings can be used as a key in objects
   age: 30,
   hobbies: ["Sports", "Cooking"],
+  // userChosenName: "...", // This will create a new property rather than use the previous const.
+  [userChosenName]: "...", // The square brackets will make the interpreter search for a variable with that name and take the value stored in it.
   greet: function () {
     alert("Hello There");
   },
