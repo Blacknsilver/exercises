@@ -40,6 +40,24 @@ const searchBtn = document.getElementById("search-btn");
 
 const movies = [];
 
+const renderMovies = () => {
+  const movieList = document.getElementById("movie-list");
+
+  if (movies.length === 0) {
+    movieList.classList.remove("visible"); // if there are no movies, make the thing invisible
+    return;
+  } else {
+    movieList.classList.add("visible");
+  }
+  movieList.innerHTML = ""; // This clears the list before doing anything else
+
+  movies.forEach((movie) => {
+    const movieElement = document.createElement("li");
+    movieElement.textContent = movie.info.title;
+    movieList.append(movieElement);
+  });
+};
+
 const addMovieHandler = () => {
   // Gathers all user input and adds that to the movie.
   const title = document.getElementById("title").value;
@@ -56,13 +74,13 @@ const addMovieHandler = () => {
 
   const newMovie = {
     info: {
-      title: title,
+      title, // shorthand for title:title
       [extraName]: extraValue,
     },
     id: Math.random(),
   };
   movies.push(newMovie);
-  console.log(newMovie);
+  renderMovies();
 };
 
 addMovieBtn.addEventListener("click", addMovieHandler);
