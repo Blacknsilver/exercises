@@ -57,10 +57,12 @@ const renderMovies = (filter = "") => {
 
   filteredMovies.forEach((movie) => {
     const movieElement = document.createElement("li");
-    let text = movie.info.title + " - ";
-    for (const key in movie.info) {
+    const { info, ...otherProps } = movie; // info is the same as movie.info, everything else goes into otherProps
+    const { title: movieTitle } = info; // movieTitle is a new const with the same information as title, which is the same as info.title
+    let text = movieTitle + " - ";
+    for (const key in info) {
       if (key !== "title") {
-        text = text + `${key}: ${movie.info[key]}`;
+        text = text + `${key}: ${info[key]}`;
       } // title has to be a string, otherwise the interpreter would look for a variable of that name
     }
     movieElement.textContent = text;
@@ -87,7 +89,7 @@ const addMovieHandler = () => {
       title, // shorthand for title:title
       [extraName]: extraValue,
     },
-    id: Math.random(),
+    id: Math.random().toString(),
   };
   movies.push(newMovie);
   renderMovies();
