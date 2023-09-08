@@ -40,7 +40,7 @@ const searchBtn = document.getElementById("search-btn");
 
 const movies = [];
 
-const renderMovies = () => {
+const renderMovies = (filter = "") => {
   const movieList = document.getElementById("movie-list");
 
   if (movies.length === 0) {
@@ -51,7 +51,11 @@ const renderMovies = () => {
   }
   movieList.innerHTML = ""; // This clears the list before doing anything else
 
-  movies.forEach((movie) => {
+  const filteredMovies = !filter
+    ? movies
+    : movies.filter((movie) => movie.info.title.includes(filter)); // This filters all movies for the ones where the movie name includes the filter term. If no filter is set, use all movies.
+
+  filteredMovies.forEach((movie) => {
     const movieElement = document.createElement("li");
     let text = movie.info.title + " - ";
     for (const key in movie.info) {
@@ -89,4 +93,10 @@ const addMovieHandler = () => {
   renderMovies();
 };
 
+const searchMovieHandler = () => {
+  const filterTerm = document.getElementById("filter-title").value;
+  renderMovies(filterTerm);
+};
+
 addMovieBtn.addEventListener("click", addMovieHandler);
+searchBtn.addEventListener("click", searchMovieHandler);
