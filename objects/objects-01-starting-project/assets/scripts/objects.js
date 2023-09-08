@@ -53,7 +53,13 @@ const renderMovies = () => {
 
   movies.forEach((movie) => {
     const movieElement = document.createElement("li");
-    movieElement.textContent = movie.info.title;
+    let text = movie.info.title + " - ";
+    for (const key in movie.info) {
+      if (key !== "title") {
+        text = text + `${key}: ${movie.info[key]}`;
+      } // title has to be a string, otherwise the interpreter would look for a variable of that name
+    }
+    movieElement.textContent = text;
     movieList.append(movieElement);
   });
 };
