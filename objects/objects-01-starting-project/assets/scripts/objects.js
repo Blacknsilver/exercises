@@ -58,8 +58,9 @@ const renderMovies = (filter = "") => {
   filteredMovies.forEach((movie) => {
     const movieElement = document.createElement("li");
     const { info, ...otherProps } = movie; // info is the same as movie.info, everything else goes into otherProps
-    const { title: movieTitle } = info; // movieTitle is a new const with the same information as title, which is the same as info.title
-    let text = movieTitle + " - ";
+    // const { title: movieTitle } = info; // movieTitle is a new const with the same information as title, which is the same as info.title
+    // const { getFormattedTitle } = movie
+    let text = movie.getFormattedTitle() + " - ";
     for (const key in info) {
       if (key !== "title") {
         text = text + `${key}: ${info[key]}`;
@@ -90,6 +91,9 @@ const addMovieHandler = () => {
       [extraName]: extraValue,
     },
     id: Math.random().toString(),
+    getFormattedTitle() {
+      return this.info.title.toUpperCase();
+    },
   };
   movies.push(newMovie);
   renderMovies();
