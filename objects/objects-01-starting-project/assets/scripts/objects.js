@@ -61,9 +61,9 @@ const renderMovies = (filter = "") => {
     // const { title: movieTitle } = info; // movieTitle is a new const with the same information as title, which is the same as info.title
     let { getFormattedTitle } = movie;
     getFormattedTitle = getFormattedTitle.bind(movie); // When this function executes, this inside of the function should refer to the movie object.
-    let text = getFormattedTitle() + " - ";
+    let text = getFormattedTitle.call(movie) + " - ";
     for (const key in info) {
-      if (key !== "title") {
+      if (key !== "title" && key !== "_title") {
         text = text + `${key}: ${info[key]}`;
       } // title has to be a string, otherwise the interpreter would look for a variable of that name
     }
@@ -88,7 +88,16 @@ const addMovieHandler = () => {
 
   const newMovie = {
     info: {
-      title, // shorthand for title:title
+      set title(val) {
+        if (val.trim() === "") {
+          this._title = "DEFAULT";
+          return;
+        }
+        this._title = val;
+      },
+      get title() {
+        return this._title;
+      },
       [extraName]: extraValue,
     },
     id: Math.random().toString(),
@@ -96,6 +105,9 @@ const addMovieHandler = () => {
       return this.info.title.toUpperCase();
     },
   };
+  newMovie.info.title = title;
+  console.log(newMovie.info.title);
+
   movies.push(newMovie);
   renderMovies();
 };
