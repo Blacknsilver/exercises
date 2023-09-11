@@ -3,25 +3,28 @@ class Product {
   imageUrl;
   description;
   price;
+  constructor(title, image, desc, price) {
+    this.title = title;
+    this.imageUrl = image;
+    this.description = desc;
+    this.price = price;
+  }
 }
 
 const productList = {
   products: [
-    new Product(),
-    {
-      title: "A Pillow",
-      imageUrl:
-        "https://m.media-amazon.com/images/I/51HGSKCft0L._AC_UL320_.jpg",
-      price: 19.99,
-      description: "A soft pillow",
-    },
-    {
-      title: "A Carpet",
-      imageUrl:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Wollteppich_1.jpg/220px-Wollteppich_1.jpg",
-      price: 89.99,
-      description: "A carpet",
-    },
+    new Product(
+      "A Pillow",
+      "https://m.media-amazon.com/images/I/51HGSKCft0L._AC_UL320_.jpg",
+      "A soft pillow",
+      19.99
+    ),
+    new Product(
+      "A Carpet",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Wollteppich_1.jpg/220px-Wollteppich_1.jpg",
+      "A carpet",
+      89.99
+    ),
   ],
   render() {
     const renderHook = document.getElementById("app");
