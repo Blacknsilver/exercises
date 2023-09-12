@@ -11,8 +11,8 @@ class Product {
   }
 }
 
-const productList = {
-  products: [
+class ProductList {
+  products = [
     new Product(
       "A Pillow",
       "https://m.media-amazon.com/images/I/51HGSKCft0L._AC_UL320_.jpg",
@@ -25,7 +25,9 @@ const productList = {
       "A carpet",
       89.99
     ),
-  ],
+  ];
+
+  constructor() {}
   render() {
     const renderHook = document.getElementById("app");
     const prodList = document.createElement("ul");
@@ -47,6 +49,8 @@ const productList = {
       prodList.append(prodEl);
     }
     renderHook.append(prodList);
-  },
-};
+  }
+}
+
+const productList = new ProductList();
 productList.render();
