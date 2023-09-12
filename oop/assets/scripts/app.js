@@ -71,7 +71,6 @@ class ProductList {
 
   constructor() {}
   render() {
-    const renderHook = document.getElementById("app");
     const prodList = document.createElement("ul");
     prodList.className = "product-list"; // this is a css class
     for (const prod of this.products) {
@@ -79,9 +78,21 @@ class ProductList {
       const prodEl = productItem.render();
       prodList.append(prodEl);
     }
-    renderHook.append(prodList);
+    return prodList;
+  }
+}
+class Shop {
+  render() {
+    const renderHook = document.getElementById("app");
+
+    const cart = new ShoppingCart();
+    const cartEl = cart.render();
+    const productList = new ProductList();
+    const prodListEl = productList.render();
+    renderHook.append(cartEl);
+    renderHook.append(prodListEl);
   }
 }
 
-const productList = new ProductList();
-productList.render();
+const shop = new Shop();
+shop.render();
