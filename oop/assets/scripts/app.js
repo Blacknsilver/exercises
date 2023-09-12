@@ -11,6 +11,19 @@ class Product {
   }
 }
 
+class ShoppingCart {
+  items = [];
+  render() {
+    const cartEl = document.createElement("section");
+    cartEl.innerHTML = `
+    <h2>Total: \$${0}</h2>
+    <button>Order now.</button>
+    `;
+    cartEl.className = "cart";
+    return cartEl;
+  }
+}
+
 class ProductItem {
   constructor(product) {
     this.product = product;
@@ -35,7 +48,7 @@ class ProductItem {
         </div>
       `;
     const addCartButton = prodEl.querySelector("button"); // Even though the page will have multiple buttons, this code will execute for and treat each button individually.
-    addCartButton.addEventListener("click", this.addToCart);
+    addCartButton.addEventListener("click", this.addToCart.bind(this));
     return prodEl;
   }
 }
