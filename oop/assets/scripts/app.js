@@ -120,9 +120,9 @@ class ProductItem extends Component {
 class ProductList extends Component {
   #products = [];
 
-  constructor(renderHookId, false) {
-    super(renderHookId);
-    this.render()
+  constructor(renderHookId) {
+    super(renderHookId, false);
+    this.render();
     this.fetchProducts();
   }
 
