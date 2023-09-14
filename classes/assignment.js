@@ -24,3 +24,24 @@ console.log(courseTwo.calculateValue());
 
 courseOne.printSummary();
 courseTwo.printSummary();
+
+class PracticalCourse extends Course {
+  constructor(title, length, price, exercisesCount) {
+    super(title, length, price);
+    this.exercisesCount = exercisesCount;
+  }
+}
+
+const courseThree = new PracticalCourse("RandomThirdTitle", 11, 50, 100);
+console.log(courseThree);
+
+class TheoreticalCourse extends Course {
+  publish() {
+    console.log("Publishing...");
+  }
+}
+
+const courseFour = new TheoreticalCourse("RandomFourthTitle", 5, 70);
+
+courseFour.printSummary();
+courseFour.publish();
