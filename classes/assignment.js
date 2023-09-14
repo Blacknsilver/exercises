@@ -1,15 +1,26 @@
 class Course {
+  #price = 0;
+  get price() {
+    return "$" + this.#price;
+  }
+  set price(value) {
+    if (value <= 0) {
+      throw "Invalid value";
+    }
+    this.#price = value;
+  }
+
   constructor(title, length, price) {
     this.title = title;
     this.length = length;
-    this.price = price;
+    this._price = price;
   }
   calculateValue() {
-    return this.length / this.price;
+    return this.length / this.#price;
   }
   printSummary() {
     console.log(
-      `Title: ${this.title}, Length: ${this.length}, Price: ${this.price}`
+      `Title: ${this.title}, Length: ${this.length}, Price: ${this._price}`
     );
   }
 }
@@ -26,8 +37,8 @@ courseOne.printSummary();
 courseTwo.printSummary();
 
 class PracticalCourse extends Course {
-  constructor(title, length, price, exercisesCount) {
-    super(title, length, price);
+  constructor(title, length, _price, exercisesCount) {
+    super(title, length, _price);
     this.exercisesCount = exercisesCount;
   }
 }
