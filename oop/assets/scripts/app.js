@@ -19,9 +19,15 @@ class ElementAttribute {
 }
 
 class Component {
-  constructor(renderHookId) {
+  constructor(renderHookId, shouldRender = true) {
     this.hookId = renderHookId;
+    if (shouldRender) {
+      this.render();
+    }
   }
+
+  render() {}
+
   createRootElement(tag, cssClasses, attributes) {
     const rootElement = document.createElement(tag);
     if (cssClasses) {
@@ -56,7 +62,12 @@ class ShoppingCart extends Component {
   }
 
   constructor(renderHookId) {
-    super(renderHookId);
+    super(renderHookId, false);
+    this.orderProducts = () => {
+      console.log("Ordering...");
+      console.log(this.items);
+    };
+    this.render();
   }
 
   addProduct(product) {
@@ -71,22 +82,25 @@ class ShoppingCart extends Component {
     <h2>Total: \$${0}</h2>
     <button>Order now.</button>
     `;
+    const orderButton = cartEl.querySelector("button");
+    // orderButton.addEventListener("click", () => this.orderProducts());
+    orderButton.addEventListener("click", this.orderProducts);
     this.totalOutput = cartEl.querySelector("h2");
-    return cartEl;
   }
 }
 
-class ProductItem {
-  constructor(product) {
+class ProductItem extends Component {
+  constructor(product, renderHookId) {
+    super(renderHookId, false);
     this.product = product;
+    this.render();
   }
   addToCart() {
     App.addProductToCart(this.product);
   }
 
   render() {
-    const prodEl = document.createElement("li");
-    prodEl.className = "product-item"; // another css class
+    const prodEl = this.createRootElement("li", "product-item");
     prodEl.innerHTML = `
         <div>
             <img src="${this.product.imageUrl}" alt="${this.product.title}"        
@@ -100,54 +114,64 @@ class ProductItem {
       `;
     const addCartButton = prodEl.querySelector("button"); // Even though the page will have multiple buttons, this code will execute for and treat each button individually.
     addCartButton.addEventListener("click", this.addToCart.bind(this));
-    return prodEl;
   }
 }
 
-class ProductList {
-  products = [
-    new Product(
-      "A Pillow",
-      "https://m.media-amazon.com/images/I/51HGSKCft0L._AC_UL320_.jpg",
-      "A soft pillow",
-      19.99
-    ),
-    new Product(
-      "A Carpet",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Wollteppich_1.jpg/220px-Wollteppich_1.jpg",
-      "A carpet",
-      89.99
-    ),
-  ];
+class ProductList extends Component {
+  #products = [];
 
-  constructor() {}
-  render() {
-    const prodList = document.createElement("ul");
-    prodList.className = "product-list"; // this is a css class
-    for (const prod of this.products) {
-      const productItem = new ProductItem(prod);
-      const prodEl = productItem.render();
-      prodList.append(prodEl);
+  constructor(renderHookId, false) {
+    super(renderHookId);
+    this.render()
+    this.fetchProducts();
+  }
+
+  fetchProducts() {
+    this.products = [
+      new Product(
+        "A Pillow",
+        "https://m.media-amazon.com/images/I/51HGSKCft0L._AC_UL320_.jpg",
+        "A soft pillow",
+        19.99
+      ),
+      new Product(
+        "A Carpet",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Wollteppich_1.jpg/220px-Wollteppich_1.jpg",
+        "A carpet",
+        89.99
+      ),
+    ];
+    this.renderProducts();
+  }
+  renderProducts() {
+    for (const prod of this.#products) {
+      new ProductItem(prod, "prod-list");
     }
-    return prodList;
+  }
+
+  render() {
+    const prodList = this.createRootElement("ul", "product-list", [
+      new ElementAttribute("id", "prod-list"),
+    ]);
+    if (this.#products && this.#products.length > 0) {
+      this.renderProducts();
+    }
   }
 }
-class Shop {
-  render() {
-    const renderHook = document.getElementById("app");
+class Shop extends Component {
+  constructor() {
+    super();
+  }
 
+  render() {
     this.cart = new ShoppingCart("app");
-    this.cart.render();
-    const productList = new ProductList();
-    const prodListEl = productList.render();
-    renderHook.append(prodListEl);
+    new ProductList("app");
   }
 }
 class App {
   static cart;
   static init() {
     const shop = new Shop();
-    shop.render();
     this.cart = shop.cart;
   }
   static addProductToCart(product) {
