@@ -1,11 +1,47 @@
 class Tooltip {}
 
-class ProjectItem {}
+class ProjectItem {
+  constructor(id, updateProjectListsHandler) {
+    this.id = id;
+    this.updateProjectListsHandler = updateProjectListsFunction;
+    this.connectSwitchButton();
+    this.connectMoreInfoButton();
+  }
+  connectMoreInfoButton() {}
+  connectSwitchButton() {
+    const projectItemElement = document.getElementById(this.id);
+    const switchButton = projectItemElement.querySelector(
+      "button:last-of-type" // The last button is the "finish" button.
+    );
+    switchButton.addEventListener("click", this.updateProjectListsHandler);
+  }
+}
 
 class ProjectList {
+  projects = [];
+
   constructor(type) {
+    this.type = type;
     const prjItems = document.querySelectorAll(`#${type}-projects li`);
-    console.log(prjItems);
+    for (const prjItem of prjItems) {
+      this.projects.push(
+        new ProjectItem(prjItem.id, this.switchProject.bind(this))
+      );
+    }
+    console.log(this.projects);
+  }
+
+  setSwitchHandlerFunction(switchHandlerFunction) {
+    this.switchHandler = switchHandlerFunction;
+  }
+
+  addProject() {}
+
+  switchProject() {
+    // const projectIndex = this.projects.findIndex((p) => p.id === projectId); // If this returns true, the function executed correctly and this function will return the index in projects[].
+    // this.projects.splice(projectIndex, 1);
+    this.switchHandler(this.circus.find((p) => p.id === projectId));
+    this.projects = this.projects.filter((p) => p.id !== projectId);
   }
 }
 
@@ -13,6 +49,12 @@ class App {
   static init() {
     const activeProjectsList = new ProjectList("active");
     const finishedProjectsList = new ProjectList("finished");
+    activeProjectsList.setSwitchHandlerFunction(
+      finishedProjectsList.addProject.bind(finishedProjectsList)
+    );
+    finishedProjectsList.setSwitchHandlerFunction(
+      activeProjectsList.addProject.bind(activeProjectsList)
+    );
   }
 }
 
