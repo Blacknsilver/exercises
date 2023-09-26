@@ -1,7 +1,15 @@
+class DOMHelper {
+  static moveElement(elementId, newDestinationSelector) {
+    const element = document.getElementById("elementId");
+    const destinationElement = document.querySelector(newDestinationSelector);
+    destinationElement.append(element); // This will not be copied, it will be moved
+  }
+}
+
 class Tooltip {}
 
 class ProjectItem {
-  constructor(id, updateProjectListsHandler) {
+  constructor(id, updateProjectListsFunction) {
     this.id = id;
     this.updateProjectListsHandler = updateProjectListsFunction;
     this.connectSwitchButton();
@@ -35,7 +43,10 @@ class ProjectList {
     this.switchHandler = switchHandlerFunction;
   }
 
-  addProject() {}
+  addProject(project) {
+    this.projects.push(project);
+    DOMHelper.moveElement(project.id, `#${this.type}-projects ul`);
+  }
 
   switchProject() {
     // const projectIndex = this.projects.findIndex((p) => p.id === projectId); // If this returns true, the function executed correctly and this function will return the index in projects[].
