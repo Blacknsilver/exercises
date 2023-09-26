@@ -1,4 +1,10 @@
 class DOMHelper {
+  static clearEventListeners(element) {
+    const clonedElement = element.cloneNode(true);
+    element.replaceWith(clonedElement); // This gets rid of any existing event listeners, so they can be garbage collected.
+    return clonedElement;
+  }
+
   static moveElement(elementId, newDestinationSelector) {
     const element = document.getElementById("elementId");
     const destinationElement = document.querySelector(newDestinationSelector);
@@ -16,12 +22,21 @@ class ProjectItem {
     this.connectMoreInfoButton();
   }
   connectMoreInfoButton() {}
+
   connectSwitchButton() {
     const projectItemElement = document.getElementById(this.id);
-    const switchButton = projectItemElement.querySelector(
+    let switchButton = projectItemElement.querySelector(
       "button:last-of-type" // The last button is the "finish" button.
     );
-    switchButton.addEventListener("click", this.updateProjectListsHandler);
+    switchButton = DOMHelper.clearEventListeners(switchButton);
+    switchButton.addEventListener(
+      "click",
+      this.updateProjectListsHandler.bind(null, this.id)
+    );
+  }
+  update(updateProjectListsFn, type) {
+    this.updateProjectListsHandler = updateProjectListsFn;
+    this.connectSwitchButton();
   }
 }
 
@@ -46,6 +61,7 @@ class ProjectList {
   addProject(project) {
     this.projects.push(project);
     DOMHelper.moveElement(project.id, `#${this.type}-projects ul`);
+    project.update(this.switchProject.bind(this), this.type);
   }
 
   switchProject() {
