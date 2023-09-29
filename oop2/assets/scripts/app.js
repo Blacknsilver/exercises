@@ -1,42 +1,106 @@
 class DOMHelper {
   static clearEventListeners(element) {
     const clonedElement = element.cloneNode(true);
-    element.replaceWith(clonedElement); // This gets rid of any existing event listeners, so they can be garbage collected.
+    element.replaceWith(clonedElement);
     return clonedElement;
   }
 
   static moveElement(elementId, newDestinationSelector) {
-    const element = document.getElementById("elementId");
+    const element = document.getElementById(elementId);
     const destinationElement = document.querySelector(newDestinationSelector);
-    destinationElement.append(element); // This will not be copied, it will be moved
+    destinationElement.append(element);
   }
 }
 
-class Tooltip {}
+class Component {
+  constructor(hostElementId, insertBefore = false) {
+    if (hostElementId) {
+      this.hostElement = document.getElementById(hostElementId);
+    } else {
+      this.hostElement = document.body;
+    }
+    this.insertBefore = insertBefore;
+  }
+
+  detach() {
+    if (this.element) {
+      this.element.remove();
+      // this.element.parentElement.removeChild(this.element);
+    }
+  }
+
+  attach() {
+    this.hostElement.insertAdjacentElement(
+      this.insertBefore ? 'afterbegin' : 'beforeend',
+      this.element
+    );
+  }
+}
+
+class Tooltip extends Component {
+  constructor(closeNotifierFunction) {
+    super();
+    this.closeNotifier = closeNotifierFunction;
+    this.create();
+  }
+
+  closeTooltip = () => {
+    this.detach();
+    this.closeNotifier();
+  };
+
+  create() {
+    const tooltipElement = document.createElement('div');
+    tooltipElement.className = 'card';
+    tooltipElement.textContent = 'DUMMY!';
+    tooltipElement.addEventListener('click', this.closeTooltip);
+    this.element = tooltipElement;
+  }
+}
 
 class ProjectItem {
-  constructor(id, updateProjectListsFunction) {
+  hasActiveTooltip = false;
+
+  constructor(id, updateProjectListsFunction, type) {
     this.id = id;
     this.updateProjectListsHandler = updateProjectListsFunction;
-    this.connectSwitchButton();
     this.connectMoreInfoButton();
+    this.connectSwitchButton(type);
   }
-  connectMoreInfoButton() {}
 
-  connectSwitchButton() {
+  showMoreInfoHandler() {
+    if (this.hasActiveTooltip) {
+      return;
+    }
+    const tooltip = new Tooltip(() => {
+      this.hasActiveTooltip = false;
+    });
+    tooltip.attach();
+    this.hasActiveTooltip = true;
+  }
+
+  connectMoreInfoButton() {
     const projectItemElement = document.getElementById(this.id);
-    let switchButton = projectItemElement.querySelector(
-      "button:last-of-type" // The last button is the "finish" button.
+    const moreInfoBtn = projectItemElement.querySelector(
+      'button:first-of-type'
     );
-    switchButton = DOMHelper.clearEventListeners(switchButton);
-    switchButton.addEventListener(
-      "click",
+    moreInfoBtn.addEventListener('click', this.showMoreInfoHandler);
+  }
+
+  connectSwitchButton(type) {
+    const projectItemElement = document.getElementById(this.id);
+    let switchBtn = projectItemElement.querySelector('button:last-of-type');
+    switchBtn = DOMHelper.clearEventListeners(switchBtn);
+    switchBtn.textContent = type === 'active' ? 'Finish' : 'Activate';
+    switchBtn.addEventListener(
+      'click',
       this.updateProjectListsHandler.bind(null, this.id)
     );
   }
+
   update(updateProjectListsFn, type) {
     this.updateProjectListsHandler = updateProjectListsFn;
-    this.connectSwitchButton();
+    this.connectSwitchButton(type);
   }
 }
 
@@ -48,7 +112,7 @@ class ProjectList {
     const prjItems = document.querySelectorAll(`#${type}-projects li`);
     for (const prjItem of prjItems) {
       this.projects.push(
-        new ProjectItem(prjItem.id, this.switchProject.bind(this))
+        new ProjectItem(prjItem.id, this.switchProject.bind(this), this.type)
       );
     }
     console.log(this.projects);
@@ -64,18 +128,18 @@ class ProjectList {
     project.update(this.switchProject.bind(this), this.type);
   }
 
-  switchProject() {
-    // const projectIndex = this.projects.findIndex((p) => p.id === projectId); // If this returns true, the function executed correctly and this function will return the index in projects[].
+  switchProject(projectId) {
+    // const projectIndex = this.projects.findIndex(p => p.id === projectId);
     // this.projects.splice(projectIndex, 1);
-    this.switchHandler(this.circus.find((p) => p.id === projectId));
-    this.projects = this.projects.filter((p) => p.id !== projectId);
+    this.switchHandler(this.projects.find(p => p.id === projectId));
+    this.projects = this.projects.filter(p => p.id !== projectId);
   }
 }
 
 class App {
   static init() {
-    const activeProjectsList = new ProjectList("active");
-    const finishedProjectsList = new ProjectList("finished");
+    const activeProjectsList = new ProjectList('active');
+    const finishedProjectsList = new ProjectList('finished');
     activeProjectsList.setSwitchHandlerFunction(
       finishedProjectsList.addProject.bind(finishedProjectsList)
     );
