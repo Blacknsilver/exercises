@@ -1,15 +1,69 @@
 const button = document.querySelector("button");
 
-// button.onclick = function () {}; // A different way to do things
+// button.onclick = function() {
 
-const buttonClickHandler = () => {
-  alert("Button was clicked");
+// };
+
+const buttonClickHandler = (event) => {
+  // event.target.disabled = true;
+  console.log(event);
 };
 
-// button.onclick = buttonClickHandler; // Yet another way to do things
+const anotherButtonClickHandler = () => {
+  console.log("This was clicked!");
+};
 
-button.addEventListener("click", buttonClickHandler); // This allows us to add multiple event listeners and there's also a .removeEventListener() function available.
+// button.onclick = buttonClickHandler;
+// button.onclick = anotherButtonClickHandler;
 
-setTimeout(() => {
-  button.removeEventListener("click", buttonClickHandler);
-}, 2000);
+const boundFn = buttonClickHandler.bind(this);
+
+// button.addEventListener('click', buttonClickHandler);
+
+// setTimeout(() => {
+//   button.removeEventListener('click', buttonClickHandler);
+// }, 2000);
+
+// buttons.forEach(btn => {
+//   btn.addEventListener('mouseenter', buttonClickHandler);
+// });
+
+// window.addEventListener('scroll', event => {
+//   console.log(event);
+// });
+
+const form = document.querySelector("form");
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  console.log(event);
+});
+
+const div = document.querySelector("div");
+
+div.addEventListener("click", (event) => {
+  console.log("CLICKED DIV");
+  console.log(event);
+});
+
+button.addEventListener("click", (event) => {
+  event.stopPropagation();
+  console.log("CLICKED BUTTON");
+  console.log(event);
+});
+
+// We want to be able to change the color of each individual li box on the page to red and vice-versa with a click.
+const listItems = document.querySelectorAll("li");
+const list = document.querySelector("ul");
+
+// listItems.forEach((listItem) => {
+//   listItem.addEventListener("click", (event) => {
+//     event.target.classList.toggle("highlight");
+//   });
+// });
+
+list.addEventListener("click", (event) => {
+  // console.log(event.currentTarget)
+  // event.target.classList.toggle("highlight");
+  event.target.closest("li").classList.toggle("highlight");
+});
