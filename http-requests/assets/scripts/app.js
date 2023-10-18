@@ -1,5 +1,7 @@
 const listElement = document.querySelector(".posts");
 const postTemplate = document.getElementById("single-post");
+const form = document.querySelector("#new-post form");
+const fetchButton = document.querySelector("#available-posts button");
 
 function sendHttpRequest(method, url, data) {
   const promise = new Promise((resolve, reject) => {
@@ -11,7 +13,6 @@ function sendHttpRequest(method, url, data) {
 
     xhr.onload = function () {
       resolve(xhr.response);
-      //   console.log(xhr.response);
       //   const listOfPosts = JSON.parse(xhr.response);
     };
 
@@ -19,21 +20,6 @@ function sendHttpRequest(method, url, data) {
   });
   return promise;
 }
-
-// function fetchHosts() {
-//   sendHttpRequest("GET", '"https://jsonplaceholder.typicode.com/posts"').then(
-//     (responseData) => {
-//       const listOfPosts = xhr.response;
-//       for (const post of listOfPosts) {
-//         const postEl = document.importNode(postTemplate.content, true);
-//         postEl.querySelector("h2").textContent = post.title.toUpperCase();
-//         postEl.querySelector("p").textContent = post.body;
-//         listElement.append(postEl);
-//       }
-//     }
-//   );
-// }
-// The alternative way of doing this.
 
 async function fetchPosts() {
   const responseData = await sendHttpRequest(
@@ -61,5 +47,14 @@ async function createPost(title, content) {
   sendHttpRequest("POST", "https://jsonplaceholder.typicode.com/posts", post);
 }
 
-fetchPosts();
-createPost("DUMMY", "A dummy post!");
+fetchButton.addEventListener("click", () => {
+  fetchPosts();
+});
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  // Can validate user input here
+  const enteredTitle = event.currentTarget.querySelector("#title").value;
+  const enteredContent = event.currentTarget.querySelector("#content").value;
+
+  createPost(enteredTitle, enteredContent);
+});
