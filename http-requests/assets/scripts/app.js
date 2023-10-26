@@ -32,6 +32,9 @@ function sendHttpRequest(method, url, data) {
   return fetch(url, {
     method: method,
     body: JSON.stringify(data),
+    headers: {
+      "Content-type": "application/json",
+    },
   }).then((response) => {
     return response.json(); // This will parse the body of the response and transform it from json to javascript.
   });
