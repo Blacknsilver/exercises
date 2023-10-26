@@ -35,9 +35,21 @@ function sendHttpRequest(method, url, data) {
     headers: {
       "Content-type": "application/json",
     },
-  }).then((response) => {
-    return response.json(); // This will parse the body of the response and transform it from json to javascript.
-  });
+  })
+    .then((response) => {
+      if (response.status >= 200 && response.status < 300) {
+        return response.json(); // This will parse the body of the response and transform it from json to javascript.
+      } else {
+        return response.json().then((errData) => {
+          console.log(errData);
+          throw new Error("Something went wrong server-side");
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      throw new error("Something went wrong");
+    });
 }
 
 async function fetchPosts() {
