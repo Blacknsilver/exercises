@@ -29,8 +29,10 @@ function sendHttpRequest(method, url, data) {
 
   // });
   // return promise;
-  return fetch(url).then((response) => {
-    // This will send a fetch request. Url should be a string.
+  return fetch(url, {
+    method: method,
+    body: JSON.stringify(data),
+  }).then((response) => {
     return response.json(); // This will parse the body of the response and transform it from json to javascript.
   });
 }
