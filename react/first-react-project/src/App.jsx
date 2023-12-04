@@ -1,4 +1,5 @@
 import ExpenseItem from "./components/ExpenseItem";
+import Card from "./components/Card";
 
 function App() {
   const expenses = [
@@ -23,7 +24,7 @@ function App() {
     },
   ];
   return (
-    <div>
+    <Card>
       <h2>
         <ExpenseItem
           title={expenses[0].title}
@@ -46,7 +47,7 @@ function App() {
           date={expenses[3].date}
         ></ExpenseItem>
       </h2>
-    </div>
+    </Card>
   );
 }
 
